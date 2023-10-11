@@ -1,0 +1,707 @@
+the next thing i want to talk about
+is the propensity score and propensity
+space based methods for average
+treatment effect destination
+there are many reasons for doing this
+the first is
+essentially that the propensity score is
+one of the most
+important objects um in
+observational studies and causal
+inference so in a class like this we
+were kind of
+bound to talk about it at some point and
+now is as good a time as any
+the second is that propensity score
+based methods
+uh for average treatment effect
+estimation uh
+have an interesting uh connection to
+machine learning and there's actually
+been a lot of recent discussion
+around the relevance of kind of a
+machine learning based approach
+to propensity-based methods so i'm going
+to talk about that
+and it's going to give an interesting
+complement to what we just saw
+in the case of machine learning based
+progression adjustments
+the last is that propensity score based
+ideas
+the ideas we see here are going to play
+a key role
+in enabling the kind of eventual best
+practice methods
+uh for average treatmentific destination
+based on uh
+machine learning so we kind of need it
+as a preliminary for that
+but anyways what is the propensity score
+What is the propensity score
+it has a simple definition the
+propensity score
+is conditionally on covariates x the
+probability of receiving treatment
+in a randomized trial uh you might
+remember the
+treatment is assigned uniformly at
+random um
+ignoring kind of anyone anything about
+the person being treated or not
+um and a way of saying this in terms of
+propensity score
+is that in a randomized trial the
+propensity score
+is constant um say
+in a uniform a 50-50 randomized uh trial
+you flip a fair coin to determine if
+someone gets treated or not
+so in a trial like that the propensity
+score would just be
+uniformly 0.5 uh
+what this also kind of suggests is that
+at this qualitatively if a randomized
+trial is
+a setup where you have constant
+propensity scores then maybe
+if you look at the propensity score and
+plot the spread of the propensity score
+that gives you some notion of how far
+a given observational study is from
+being
+randomized so anyways
+Inverse propensity weighted transformation
+um what's interesting about
+the propensity score and the key fact
+here really
+is that under uncompoundedness
+that is the same condition we saw in
+part two
+the average treatment effect can be
+characterized
+via you could call the inverse
+propensity weighted
+transformation so here what's true
+is tau remember this average treatment
+effect um
+kind of redefined it for you just in
+case you forgotten over the past
+uh ten minutes um the average treatment
+effect
+uh you can rewrite it as um
+the expectation of w y divided by e
+minus the other term and this is
+uh this is another representation for
+the average treatment effect
+um and again kind of what's interesting
+about this
+is that here when we originally defined
+the average treatment effect it was
+determined defined in terms of potential
+outcomes
+and yi1's yi zeros in general you don't
+see potential outcomes in nature you
+observe
+the actual outcome y i so why is
+this representation helpful well here
+kind of this representation in terms of
+the inverse propensity weighting
+doesn't depend on potential outcomes it
+only depends on actual outcomes
+so this is something you can measure
+whereas this is something that kind of
+you can't directly measure how you need
+to re-represent it
+before measuring it um and so then given
+this representation
+what this immediately suggests is a
+practical estimator
+for the average treatment effect um it's
+the inverse propensity weighted
+estimator
+takes on the following form and kind of
+this unbiasedness result here
+immediately tells you uh that the
+inverse propensity weighted estimator
+is unbiased for the average treatment
+effect
+ideas of this type are very common
+many areas of statistics you might have
+require
+encountered similar idea in different
+areas under a name like
+importance weighting or harvest thompson
+sampling
+these are kind of all different
+instantiations of the same idea
+why um is inverse propensity waiting
+unbiased
+um the short story is something like
+this
+remember the treatment assignment here
+is binary it's either one or zero
+when w is one then you're always treated
+so you only get to observe the y's here
+when w equals one
+which means that you can essentially
+replace this y here
+by the treated potential outcome y i one
+uh same thing in the second term you
+only get to see that second term
+uh when w is zero when you're in control
+condition
+so you kind of could equivalently just
+think that here
+you only see the control potential
+outcome
+and what about this this ratio are the
+remaining terms the w over e
+and the one minus w over one minus e
+well just remember
+w is the whether you actually got
+treated or not
+e is the probability of getting treated
+so
+these ratios are 1 and expectation
+so the hope is that kind of since these
+ratios are one in expectation
+uh they cancel out an expectation and
+that's how you get unbiasedness
+uh the formal argument for checking out
+that this works
+relies on uncompoundedness and
+i kind of spelled out a more specific
+calculation
+here the nice thing about the
+asynchronous format
+is that if you want to think about this
+more now is a great time to pause the
+video and go through this line by line
+um and if you don't the the argument the
+ideas are
+similar to the ones as seen earlier and
+otherwise
+i'm just going to keep going here
+remember
+all of this relies on unconfoundedness
+and if you don't have uncompoundedness
+then of course you need to do something
+else to identify the average treatment
+effect
+Oracle IPW estimator
+all right so what we have so far
+um is a result that here's this kind of
+nice estimator temp ipw um it's unbiased
+for the average treatment effect one
+thing to emphasize
+is that here
+when defining this estimator i used the
+true propensity scores
+that is i actually knew i had access to
+the probability of being treated
+conditionally on x
+for all my units so i could actually
+form this score
+um i'll talk about this as the oracle
+estimator because of course sometimes
+you don't know
+efx and then you can do this and i'll
+put a star up here
+to remind us that in order to construct
+this uh
+estimator you needed to kind of have
+more information about the sampling
+distribution
+all right if oracle ipw is unbiased
+then what can we do if we don't know the
+propensity score
+well one very natural idea here uh
+is to first kind of estimate e hat
+change colors here you can first
+estimate e hat
+and then kind of once you've estimated
+the e hats
+you can plug these e hats
+into the denominator here uh so kind of
+this is not start this is a this is a
+feasible
+estimator so we're gonna kind of
+first estimate e hat
+this is just a prediction task right
+you're trying to predict w
+from x you could throw your favorite
+machine learning method at it
+boosting random forest deep nets
+anything else
+and then kind of once you have estimated
+the propensity score
+uh you could kind of try running through
+the ipw framework kind of as though
+you knew the propensity score
+and this is actually if you look at kind
+of
+the timeline of machine learning and
+causal inference this is actually kind
+of
+one of the first things people wanted to
+do they had this idea that
+look if we're running ipw uh we want
+propensity scores we could get
+propensity score estimates out of
+machine learning
+and just kind of from there proceed
+the question of course is is this any
+good
+we know that the oracle ipw estimator
+with the true propensity scores is good
+is the feasible ipw estimator um
+with estimated propensity scores good
+now we're getting into some slightly
+uh subtle territory um i won't
+give a kind of comprehensive study of
+tau had ipw with estimated propensity
+scores
+here that would be beyond the scope of
+this class
+but what i all i'll do here in terms of
+trying to see if this is good or not
+i'm going to try one line of attack that
+you might hope would work
+show that it doesn't go through
+give up uh i won't kind of study
+um tablet idw further than that um and
+then what's going to happen is the same
+line of attack
+when applied to double robust methods as
+we're going to talk about in the last
+part of this lecture
+then this line of attack is going to
+work
+so what's the idea the idea is
+essentially
+that this tau has star ipw the oracle
+ipw estimator
+if this is good then what you might hope
+is that kind of estimating the
+propensity scores and then plugging them
+into here
+that essentially it wouldn't matter too
+much and if you have
+decent kind of realistically accurate
+e-hats out of a machine learning method
+then if you
+um run this kind of
+feasible ipw estimator it would behave
+like the oracle
+then you could study the oracle in
+detail um and if these two things are
+similar enough then the kind of same
+study would also imply some good results
+about
+the feasible term and ibw and if this
+line of argument worked
+we'd be in great shape
+okay ah spoiler again i've already given
+the spoiler uh this doesn't go through
+um but kind of to see why it doesn't go
+through let's look at this in a little
+bit more detail
+so this argument has to have two parts
+right
+first we need to have an understanding
+of what does oracle
+ipw do kind of
+what would be the kind of ideal
+properties we want this feasible ipw
+estimator to satisfy and then we need to
+study the gap between the feasible and
+the oracle ipw estimator and kind of
+argue that this gap is small relative to
+stochastic fluctuations in the original
+estimator
+so let's start uh by looking at this
+oracle
+ipw estimator so this one here
+um
+with what we should see right is that
+remember we've assumed that kind of you
+your data points x
+yw or drawn iid from a distribution
+and also um here that this means that
+if you know the propensity score
+function e of x a priori
+then actually this thing in orange it's
+just
+an average of n iid things
+each of which is unbiased for the thing
+you want to estimate that is tau
+so now we know averages
+of iodine things well right
+they're gonna satisfy under very general
+conditions the central limit theorem
+they're going to converge at a root and
+rate and so kind of once we've noticed
+that oracle ipw
+is just an iid average then
+we're going to get a central limit
+theorem immediately
+and this kind of central limit theorem
+is what
+justifies kind of all the standard
+constructions for building confidence
+intervals for the average treatment
+effect
+um and so forth
+so here just to emphasize i'm going
+quickly
+i'm assuming that everyone here either
+has taken kind of
+a first class in econometrics or a class
+in statistics
+uh statistics theory maybe on the level
+of stats 200
+um so i'm assuming that this should all
+be very familiar to you
+once you see an average you understand
+that the average is going under general
+condition satisfied central limit
+theorem
+and once i tell you the the central
+there on the second orange display uh
+you'll kind of
+know how to turn this into a statement
+about confidence intervals and how to
+build confidence intervals
+um if this isn't true i encourage you to
+kind of
+go go to office hours
+go through what's going on with the ta
+and also kind of reach out with some
+more
+reading materials here
+but anyways so this is the oracle
+estimator
+the thing that converges at a one over
+root and rate
+what we want hope is for the feasible
+estimator with estimated propensity
+scores
+to also satisfy this kind of behavior
+and to also convert at a one percent
+rate
+um and what would this look like it
+would look like essentially
+this feasible estimator here um
+we'd want this to kind of look at look
+like the oracle estimator
+which we're here is a perfectly fine
+estimator plus an
+error term the error due to kind of
+using e-hat instead of e
+as the propensity score metric here and
+for this argument to go through we'd
+essentially want this difference
+uh between uh the
+feasible and oracle ipw to be
+smaller than one over root n to kind of
+be dominated by the stochastic
+fluctuations
+in taoit ipw because this would then
+mean that you can ignore these errors
+uh when studying um
+this estimator here so all right
+uh if we wanted to ignore the
+contributions of propensity score
+estimation in ipw
+we'd want this error to be much smaller
+than 1 over root
+n and is it now we need to kind of
+Upper bound
+try something try an upper bound uh here
+i tried an upper bound
+using the cauchy shorts inequality so
+first
+remember we want to bound this
+difference tau had ipw
+minus the oracle tablet star ipw
+so here i just wrote it down uh what you
+should notice is that here you're
+dividing by
+estimated propensity scores here you're
+dividing by true propensity scores
+the only kind of difference in how i
+wrote this down is i took the outcomes
+here that had
+been kind of everywhere and i just kind
+of
+put the outcomes all to the right uh
+then given this we can apply the kosher
+schwartz uh
+inequality it's gonna give us
+this here um
+you see two terms here first let's talk
+about the shorter one
+the square root of the average of the y
+i squared
+uh this is something that kind of as you
+collect more data
+it's not going to get big or small it's
+just going to be on the order of 1. this
+is going to converge to kind of
+the square root of the expectation of y
+x squared um
+so that's fine uh the more interesting
+term here is the first one
+this is the one that kind of would be
+zero
+if you kind of use the true propensity
+scores that if kind of e hath where
+exactly e
+how far is this from zero well
+just kind of you you can go through
+arguments in detail if you want
+essentially the nicest thing you could
+assume
+is that the propensities call of course
+are all bounded away from
+zero and one so then you can apply some
+kind of taylor expansion
+and once you do this uh you land on your
+feet
+and you find that this difference is
+essentially going to be
+on the order of up to constants of the
+root mean squared error of the
+propensity score
+so anyways this is one derivation
+you could try other derivations here i'm
+not going to do that
+but kind of at least with the kochi
+schwarz approach uh which to what do we
+get
+um well essentially we found that
+we have an upper bound for the
+discrepancy uh
+between tao hat ipw and tau at star ipw
+that is the kind of with a bound for the
+effect
+of using estimated propensity scores in
+ipw
+and this uh bound depends on the
+root mean squared error of
+the estimated propensity score is this
+good enough
+well the answer is going to be no
+why is remember we wanted
+in order for these errors not to matter
+we need the discrepancy between feasible
+and oracle ipw to be much smaller than
+one over redundant
+is this realistic uh
+to get out of a machine learning method
+if you studied statistical learning uh
+you'd immediately see that no
+uh if if you haven't uh then you'll have
+to just kind of take it on faith here
+uh but essentially what's realistic to
+expect
+in terms of rooting squared error well
+if you're in a parametric problem
+kind of a very easy problem where
+someone tells you that kind of
+say a linear model is well specified and
+you just need to
+fit the parameters of that linear model
+then what you can hope to get in terms
+of root mean squared error
+is a rate of convergence of one over
+square root of n
+now the problems where we apply machine
+learning are generally more complicated
+non-parametric problems
+um where getting parametric rates of
+convergence
+is too optimistic um and we should
+generally
+expect to have root mean squared error
+that's much bigger than the parametric
+rate of one over root n
+in thinking of this you should kind of
+also think back to
+um our attempts at using random forests
+for regression
+adjustments in the previous part
+where we saw that kind of random forest
+will often eventually get you
+the right answer um
+but kind of the cost of
+um being very flexible and
+non-parametric means that in any
+specific problem
+you might converge slower so actually in
+general
+when you're using a machine learning
+method you should always assume that
+your root mean squared error
+is going to be much bigger than one over
+root
+whereas here we kind of in order for
+this bound to give us what we want
+we would have needed the root mean
+squared error uh to be
+much smaller than one of rudin
+and that essentially never happens
+with uh with a machine learning method
+so
+okay uh this argument doesn't go through
+oh of course there's um there are some
+loose ends here i've essentially just
+computed an upper bound and said the
+upper bound wasn't strong enough
+uh but it turns out this isn't the
+problem this upper bound was perfectly
+fine
+the problem was just that kind of
+a more careful study would show that
+just the problem is that
+ipw and star ipw aren't particularly
+close in general
+when you estimate propensity scores
+by a general machine learning method and
+that
+what's going to happen is that in ipw
+if you use a machine learning method to
+estimate propensity scores
+and then kind of
+the error due to kind of plugging in
+estimated propensity scores is going to
+swamp
+uh the sampling error you could have
+gotten
+by using oracle ipw
+so even though kind of ipw with true
+propensity scores is a good method
+if you plug in machine learning based
+estimates
+of the propensity scores you're
+generally gonna
+end up in trouble
+Conclusion
+and so again kind of just to just to
+restate
+the main problem here is that generally
+when we use machine learning methods
+um what we want out of machine learning
+methods is
+kind of robust flexible
+estimation guarantees what we want is
+that kind of without having to model the
+problem specifically
+we kind of under very general conditions
+can hope to get
+consistency in large samples but
+just because machine learning gives you
+kind of the right answer
+in very large samples doesn't mean that
+in finite samples you can ignore its
+estimation error
+right machine learning really at a high
+level
+gives you predictions that are
+always pretty good but never great um
+and under find that in finite samples
+you almost always have non-negligible
+errors
+of kind of when you're running ipw
+when you're using a regression
+adjustment as we signed the previous
+part
+when you're running kind of machine
+running based methods here
+the kind of difference in using e hat
+versus e and ipw
+or in many other analogous settings
+um the error from using um
+the kind of error from using machine
+learning here is not negligible
+and if you don't take it into account
+you're just going to kind of
+be very wrong about the accuracy of your
+estimator
+and so forth so generally we cannot
+ignore this estimation error and the
+bias that comes from it
+and a naive approach that does so will
+generally result in confidence intervals
+and kind of other inferential statements
+that are just laid off
+and again why is this the case well
+with ipw we just saw a very concrete
+example
+kind of the standard approach for
+building confidence intervals in oracle
+ipw
+will give you confidence intervals that
+are length 1 over root n
+but now if you use a machine learning
+based method
+to estimate propensity scores you're
+going to kind of
+introduce an additional error term
+that's way bigger that's bigger than one
+over
+done so kind of once you have error
+terms that are
+larger than the confidence intervals you
+built originally
+this kind of makes the original
+confidence intervals useless
+so okay that's all for now uh
+what i hope i've gotten across so far is
+that even though
+machine learning methods can be used to
+estimate
+a variety of functions under
+considerable flexibility
+if you're going to use them for average
+treatment effect estimation
+you need to be very careful and if
+you're not careful
+then kind of uh that the kind of error
+you incur from plugging in machine
+learning based predictions into your
+estimation pipeline
+is just going to be prohibitively large
+what can we do about it
+at this point you might think the
+situation is hopeless that we should
+just kind of
+throw out machine learning based methods
+and go back to parametric modeling since
+then at least
+when the parametric model is well
+specified uh we know what to do
+but it turns out that even though kind
+of naive
+application machine learning method
+don't work out here
+there are things that do um and
+and and the solution is kind of
+delightful example
+you can do exactly the kind of thing
+we've been doing so far
+that is take a simple estimator plug
+machine learning based predictions in
+and then attempt to ignore
+the error of the machine learning based
+method
+the only thing is that you need to be
+careful about what kind of estimator
+you plug these machine learning base
+predictions in and
+okay regression adjustments alone ipw
+these don't do the job and in the last
+part of this
+lecture i'll introduce an estimator that
+does
